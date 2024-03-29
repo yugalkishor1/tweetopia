@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {createBrowserRouter,RouterProvider} from "react-router-dom";
-import Layout from "./laoyout/Layout.jsx"
+import Layout from "./layout/Layout.jsx"
 import Home from "./pages/Home.jsx"
 import Explore from "./pages/Explore.jsx"
 import "./index.css"

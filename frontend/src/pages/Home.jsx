@@ -1,11 +1,17 @@
 import React from 'react'
+import TweetInput from '../components/TweetInput.jsx'
+import Tweets from "../components/Tweets.jsx"
+
 
 function Home() {
-  return (
+    return (
+        <div className='text-center p-8'>
+            <TweetInput/>
+            <Tweets/>
+        </div>
 
-    <div className='text-center p-8'></div>
-    
-  )
+
+)
 }
 
 export default Home

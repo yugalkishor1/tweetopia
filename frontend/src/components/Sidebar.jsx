@@ -35,11 +35,11 @@ function Sidebar({className}) {
           </div>
           <div className="p-4 hover:bg-gray-200 rounded-full flex gap-4">
             <IoMdMan className="text-2xl text-gray-600" />
-            {isSmallScreen && <p>BOOKMARK</p>}
+            {isSmallScreen && <p> PROFILE</p>}
           </div>
           <div className="p-4 hover:bg-gray-200 rounded-full flex gap-4">
             <FaBookmark className="text-2xl text-gray-600" />
-            {isSmallScreen && <p>PROFILE</p>}
+            {isSmallScreen && <p>BOOKMARK</p>}
           </div>
         </div>
       )

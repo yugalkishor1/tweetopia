@@ -1,23 +1,16 @@
 import express from 'express';
-import mongoose from 'mongoose';
-const app = express();
-const PORT = process.env.PORT || 5000;
+import connectMongodb from './config/database.js';
+import dotenv from "dotenv"
+dotenv.config()
 
-mongoose.connect("mongodb+srv://yugal_123:80eTz1FK3fyA40PC@Cluster0.qwcwqpu.mongodb.net/twitter?retryWrites=true&w=majority&appName=Cluster0")
-.then(()=>{
-    console.log("mongodb atlas connected");
-})
-.catch((err)=>{
-    console.log("problem with",err);
-})
+const app = express();
+
+connectMongodb()
 
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-
-
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(process.env.PORT || 5000, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
 });

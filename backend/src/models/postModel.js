@@ -13,7 +13,14 @@ const postSchema = new mongoose.Schema({
       }),
       required: false
     },
-    media: [{ type: String }], // URLs or file paths for images, videos, etc.
+    images: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'PostImages'
+    }],
+    videos: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'PostVideos'
+    }],
     hashtags: [{ type: String }],
     mentions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
   });

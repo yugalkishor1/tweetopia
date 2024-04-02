@@ -8,8 +8,14 @@ const userSchema = new mongoose.Schema({
     bio: { type: String },
     location: { type: String },
     website: { type: String },
-    profilePicture: { type: String }, // URL or file path
-    coverPhoto: { type: String }, // URL or file path
+    profilePicture:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"UserImage"
+    },
+    coverPhoto:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"UserImage"
+    },
     joinedAt: { type: Date, default: Date.now },
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]

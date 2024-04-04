@@ -29,13 +29,6 @@ twitter-clone-backend/
 │   │   ├── commentRoutes.js      # Comment-related routes
 │   │   ├── likeRoutes.js         # Like-related routes
 │   │   └── followRoutes.js       # Follow-related routes
-│   ├── services/
-│   │   ├── authService.js        # Authentication and authorization services
-│   │   ├── postService.js        # Post-related services
-│   │   ├── userService.js        # User-related services
-│   │   ├── commentService.js     # Comment-related services
-│   │   ├── likeService.js        # Like-related services
-│   │   └── followService.js      # Follow-related services
 │   └── utils/
 │       ├── fileUpload.js         # File upload utility
 │       ├── notificationHandler.js # Notification handling utility

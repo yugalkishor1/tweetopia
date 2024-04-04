@@ -1,34 +1,44 @@
 import express from 'express';
-import morgan from 'morgan'; // HTTP request logger middleware
-import cors from 'cors'; // Cross-Origin Resource Sharing middleware
-import helmet from 'helmet'; // Security middleware
-import compression from 'compression'; // Compression middleware
-import connectDB from './config/database.js'; // MongoDB Atlas connection
+import morgan from 'morgan';
+import cors from 'cors';
+import helmet from 'helmet';
+import compression from 'compression';
+import connectDB from './config/database.js';
+
+// Import routes
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import userImageRoutes from './routes/userImageRoutes.js';
 import postRoutes from './routes/postRoutes.js';
-import commentRoutes from './routes/commentRoutes.js';
+import postImageRoutes from './routes/postImageRoutes.js';
+import postVideoRoutes from './routes/postVideoRoutes.js';
+import replyRoutes from './routes/replyRoutes.js';
+import subReplyRoutes from './routes/subReplyRoutes.js';
 import likeRoutes from './routes/likeRoutes.js';
 import followRoutes from './routes/followRoutes.js';
-import errorMiddleware from './middlewares/error.js'; // Error handling middleware
+import errorMiddleware from './middlewares/error.js';
 
 const app = express();
 
 // Connect to MongoDB Atlas
 connectDB();
 
-// Middleware
-app.use(morgan('dev')); // Log HTTP requests
-app.use(cors()); // Enable CORS
-app.use(helmet()); // Secure the app with HTTP headers
-app.use(compression()); // Compress response data
-app.use(express.json()); // Parse JSON request bodies
+// Middlewares
+app.use(morgan('dev'));
+app.use(cors());
+app.use(helmet());
+app.use(compression());
+app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/users/:userId/images', userImageRoutes);
 app.use('/api/posts', postRoutes);
-app.use('/api/comments', commentRoutes);
+app.use('/api/posts/:postId/images', postImageRoutes);
+app.use('/api/posts/:postId/videos', postVideoRoutes);
+app.use('/api/posts/:postId/replies', replyRoutes);
+app.use('/api/replies/:replyId/subreplies', subReplyRoutes);
 app.use('/api/likes', likeRoutes);
 app.use('/api/follows', followRoutes);
 

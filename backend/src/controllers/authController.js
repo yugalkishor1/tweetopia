@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
-import User from '../models/User.js';
+import User from '../models/userModel.js';
 import crypto from 'crypto';
 
 // Register a new user

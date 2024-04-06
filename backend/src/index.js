@@ -8,7 +8,15 @@ import connectDB from './config/database.js';
 import authRoutes from './routes/authRoutes.js';
 
 const app = express();
+app.use(express.json())
 
+
+// routes
+app.use('/api/auth', authRoutes)  
+
+app.get("/",(req,res)=>{
+  res.json("hello")
+})
 
 
 

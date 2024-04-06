@@ -5,7 +5,7 @@ import User from '../models/userModel.js';
 import crypto from 'crypto';
 
 // Register a new user
-export const registerUser = async (req, res, next) => {
+exports.registerUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
@@ -15,15 +15,48 @@ export const registerUser = async (req, res, next) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
+    // Generate a random 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpExpiration = new Date(Date.now() + 5 * 60 * 1000); // OTP expires in 5 minutes
+
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create a new user
-    const newUser = new User({ name, email, password: hashedPassword });
+    // Create a new user and save it to the database
+    const newUser = new User({ name, email, password: hashedPassword, otp, otpExpiration });
     await newUser.save();
 
-    res.status(201).json({ message: 'User registered successfully' });
+    // Send the OTP to the user's email
+    await sendOTPEmail(email, otp);
+
+    res.status(201).json({ message: 'OTP sent to your email' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Verify OTP
+exports.verifyOTP = async (req, res, next) => {
+  try {
+    const { email, otp } = req.body;
+
+    // Retrieve the stored OTP and expiration time from the database
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.otp !== otp || new Date() > user.otpExpiration) {
+      // OTP is invalid or expired, delete the user from the database
+      await User.deleteOne({ email });
+      return res.status(401).json({ message: 'Invalid or expired OTP' });
+    }
+
+    // OTP is valid, update the user's verified status
+    user.isVerified = true;
+    await user.save();
+    res.status(200).json({ message: 'User registered successfully' });
   } catch (err) {
     next(err);
   }

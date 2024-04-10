@@ -1,44 +1,55 @@
 twitter-clone-backend/
 ├── src/
-│   ├── app.js                    # Entry point of the application
+│   ├── app.js
 │   ├── config/
-│   │   ├── database.js           # Database connection configuration
-│   │   ├── environment.js       # Environment-specific configuration
-│   │   └── socket.js             # Socket.IO configuration
+│   │   ├── database.js
+│   │   ├── environment.js
+│   │   ├── socket.js
+│   │   └── s3.js # New file for AWS S3 configuration
 │   ├── controllers/
-│   │   ├── authController.js     # Authentication and authorization controllers
-│   │   ├── postController.js     # Post-related controllers
-│   │   ├── userController.js     # User-related controllers
-│   │   ├── commentController.js  # Comment-related controllers
-│   │   ├── likeController.js     # Like-related controllers
-│   │   └── followController.js   # Follow-related controllers
+│   │   ├── authController.js
+│   │   ├── postController.js
+│   │   ├── userController.js
+│   │   ├── commentController.js
+│   │   ├── likeController.js
+│   │   └── followController.js
 │   ├── middlewares/
-│   │   ├── auth.js               # Authentication and authorization middlewares
-│   │   ├── error.js              # Error handling middleware
-│   │   └── validation.js         # Input validation middlewares
+│   │   ├── auth.js
+│   │   ├── error.js
+│   │   └── fileUpload.js # New file for file upload middleware
 │   ├── models/
-│   │   ├── User.js               # User model definition
-│   │   ├── Post.js               # Post model definition
-│   │   ├── Comment.js            # Comment model definition
-│   │   ├── Like.js               # Like model definition
-│   │   └── Follow.js             # Follow model definition
+│   │   ├── User.js
+│   │   ├── Post.js
+│   │   ├── Comment.js
+│   │   ├── Like.js
+│   │   └── Follow.js
 │   ├── routes/
-│   │   ├── authRoutes.js         # Authentication and authorization routes
-│   │   ├── postRoutes.js         # Post-related routes
-│   │   ├── userRoutes.js         # User-related routes
-│   │   ├── commentRoutes.js      # Comment-related routes
-│   │   ├── likeRoutes.js         # Like-related routes
-│   │   └── followRoutes.js       # Follow-related routes
+│   │   ├── authRoutes.js
+│   │   ├── postRoutes.js
+│   │   ├── userRoutes.js
+│   │   ├── commentRoutes.js
+│   │   ├── likeRoutes.js
+│   │   └── followRoutes.js
 │   └── utils/
-│       ├── fileUpload.js         # File upload utility
-│       ├── notificationHandler.js # Notification handling utility
-│       └── tokenHandler.js       # JSON Web Token handling utility
+│       ├── fileUpload.js # New file for file upload utility
+│       ├── notificationHandler.js
+│       └── tokenHandler.js
 ├── tests/
-│   ├── unit/                     # Unit tests
-│   ├── integration/              # Integration tests
-│   └── e2e/                      # End-to-end tests
-├── .env                          # Environment variables
-├── .gitignore                    # Git ignore rules
-├── package.json                  # Project dependencies and scripts
-├── package-lock.json             # Locked dependency tree
-└── README.md                     # Project documentation
+│   ├── unit/
+│   ├── integration/
+│   └── e2e/
+├── .env
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── README.md
+
+
+
+
+
+
+
+
+
+

@@ -5,7 +5,7 @@ import User from '../models/userModel.js';
 import crypto from 'crypto';
 
 // Register a new user
-exports.registerUser = async (req, res, next) => {
+export const registerUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
@@ -37,7 +37,7 @@ exports.registerUser = async (req, res, next) => {
 };
 
 // Verify OTP
-exports.verifyOTP = async (req, res, next) => {
+export const verifyOTP = async (req, res, next) => {
   try {
     const { email, otp } = req.body;
 

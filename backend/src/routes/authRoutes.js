@@ -2,11 +2,12 @@ import express from 'express';
 import { registerUser, loginUser, forgotPassword, resetPassword } from '../controllers/authController.js';
 import { validateRegistration, validateLogin, validateForgotPassword, validateResetPassword } from '../middleware/validation.js';
 import { auth } from '../middleware/auth.js';
+import fileUpload from '../middleware/upload.js';
 
 const router = express.Router();
 
 // Register a new user
-router.post('/register', validateRegistration, registerUser);
+router.post('/register',fileUpload, validateRegistration, registerUser);
 
 // Login an existing user
 router.post('/login', validateLogin, loginUser);

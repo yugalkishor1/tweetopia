@@ -11,14 +11,17 @@ const app = express();
 app.use(express.json())
 
 
+
+
 // routes
 app.use('/api/auth', authRoutes)  
 
 app.get("/",(req,res)=>{
-  res.json("hello")
+  res.json("helloooooooooooooo")
 })
 
 
+connectDB();
 
 // Start the server
 const PORT = process.env.PORT || 5000;

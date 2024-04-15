@@ -1,6 +1,6 @@
-const multer = require('multer');
-const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+import multer from "multer"
+import {v2 as cloudinary} from "cloudinary"
+import { CloudinaryStorage } from "multer-storage-cloudinary"
 
 cloudinary.config({
 cloud_name: 'tweetopia',

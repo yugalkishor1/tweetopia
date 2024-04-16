@@ -1,5 +1,23 @@
 import mongoose from "mongoose"
 
+// const postSchema = new mongoose.Schema({
+//   text: String,
+//   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+//   createdAt: Date,
+//   updatedAt: Date,
+//   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+//   retweets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+//   images: [String],
+//   videos: [String],
+//   hashtags: [String],
+//   mentions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+// });
+
+
+
+
+
+
 const postSchema = new mongoose.Schema({
     text: { type: String, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -24,7 +42,6 @@ const postSchema = new mongoose.Schema({
     hashtags: [{ type: String }],
     mentions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
   });
-
+  
   const postModel = mongoose.model("Post",postSchema)
-
   export default postModel;

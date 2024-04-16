@@ -6,15 +6,17 @@ import connectDB from './config/database.js';
 
 // Import routes
 import authRoutes from './routes/authRoutes.js';
+import postRoutes from "./routes/postRoutes.js"
 
 const app = express();
-app.use(express.json())
 
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // routes
 app.use('/api/auth', authRoutes)  
+app.use('/api/post', postRoutes)  
 
 app.get("/",(req,res)=>{
   res.json("helloooooooooooooo")

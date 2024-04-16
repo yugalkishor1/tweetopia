@@ -1,4 +1,4 @@
-import express from 'express';
+import express from 'express'
 import {
   createPost,
   getAllPosts,
@@ -10,13 +10,12 @@ import {
   retweetPost,
   addComment,
   getPostComments,
-} from '../controllers/postController.js';
-import { auth } from '../middlewares/auth.js';
+} from '../controllers/postController.js'
 
 const router = express.Router();
 
 // Create a new post
-router.post('/', auth, createPost);
+router.post('/',  createPost);
 
 // Get all posts
 router.get('/', getAllPosts);
@@ -25,22 +24,22 @@ router.get('/', getAllPosts);
 router.get('/:postId', getPostById);
 
 // Update a post
-router.put('/:postId', auth, updatePost);
+router.put('/:postId', updatePost);
 
 // Delete a post
-router.delete('/:postId', auth, deletePost);
+router.delete('/:postId',  deletePost);
 
 // Like a post
-router.put('/:postId/like', auth, likePost);
+router.put('/:postId/like',  likePost);
 
 // Unlike a post
-router.put('/:postId/unlike', auth, unlikePost);
+router.put('/:postId/unlike',  unlikePost);
 
 // Retweet a post
-router.put('/:postId/retweet', auth, retweetPost);
+router.put('/:postId/retweet',  retweetPost);
 
 // Add a comment to a post
-router.post('/:postId/comments', auth, addComment);
+router.post('/:postId/comments',  addComment);
 
 // Get comments for a post
 router.get('/:postId/comments', getPostComments);

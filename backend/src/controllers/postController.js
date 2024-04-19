@@ -5,10 +5,11 @@ import postVideosModel from '../models/postVideoModel.js';
 
 export const createPost = async (req, res) => {
   try {
-    // const { userId } = req.user; 
-    const { text, images, videos, hashtags, mentions,user } = req.body;
+    const { userId } = req.user; 
+    const { text, images, videos, hashtags, mentions } = req.body;
+    // const { text, images, videos, hashtags, mentions,user } = req.body;
 
-    const newPost = await postModel.create({ user,text,hashtags})
+    const newPost = await postModel.create({ user:userId,text,hashtags})
 
     // Handle images
     if (images && images.length > 0) {
@@ -37,7 +38,7 @@ export const createPost = async (req, res) => {
     }
 
     // Update the user's post count
-    await userModel.findByIdAndUpdate(user, { $push: { posts: newPost._id } });
+    await userModel.findByIdAndUpdate(userId, { $push: { posts: newPost._id } });
 
     res.status(201).json(newPost);
   } catch (error) {
@@ -46,34 +47,20 @@ export const createPost = async (req, res) => {
   }
 };
 
+export const getAllPosts = async (req, res, next) => {
+  try {
+    const posts = await postModel.find()
+      .populate('user', 'username email')
+      // .populate('images', 'imageUrl dimensions size')
+      // .populate('videos', 'videoUrl duration size')
+      // .sort({ createdAt: -1 });
 
+    res.status(200).json(posts);
+  } catch (err) {
+    next(err);
+  }
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-// // Get all posts
-// export const getAllPosts = async (req, res, next) => {
-//   try {
-//     const posts = await Post.find()
-//       .populate('user', 'username fullName profilePicture')
-//       .populate('images', 'imageUrl dimensions size')
-//       .populate('videos', 'videoUrl duration size')
-//       .sort({ createdAt: -1 });
-
-//     res.status(200).json(posts);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 // // Get a post by ID
 // export const getPostById = async (req, res, next) => {

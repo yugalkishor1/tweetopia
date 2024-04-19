@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 const postImagesSchema = new mongoose.Schema({
     postId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Post',
+      ref: 'postModel',
       required: true
     },
     imageUrl: {
@@ -23,6 +23,6 @@ const postImagesSchema = new mongoose.Schema({
     }
   });
 
-  const postImagesModel = mongoose.model('PostImage', postImagesSchema) ;
+  const postImagesModel = mongoose.model('postImagesModel', postImagesSchema) ;
   export default postImagesModel
 

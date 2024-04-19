@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     fullName: { type: String },
     bio: { type: String },
     location: { type: String },
+    posts: [{ type: mongoose.Schema.ObjectId,ref:"postModel" }],
     website: { type: String },
     profilePicture:{
       type:mongoose.Schema.Types.ObjectId,
@@ -17,10 +18,10 @@ const userSchema = new mongoose.Schema({
       ref:"UserImage"
     },
     joinedAt: { type: Date, default: Date.now },
-    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'userModel' }],
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'userModel' }]
   });
 
-  const userModel = mongoose.model("User",userSchema)
+  const userModel = mongoose.model("userModel",userSchema)
 
   export default userModel;

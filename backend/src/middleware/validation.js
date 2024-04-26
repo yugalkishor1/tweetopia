@@ -1,7 +1,6 @@
 export const validateRegistration = (req, res, next) => {
-  const { username, email, password, fullName, bio, profilePicture } = req.body;
-
-  if (!username || username.trim() === '') {
+  const { username, email, password, fullName, bio } = req.body;
+  if (!username ) {
     return res.status(400).json({ error: 'Username is required.' });
   }
   req.body.username = username.trim();
@@ -22,8 +21,8 @@ export const validateRegistration = (req, res, next) => {
     return res.status(400).json({ error: 'Bio is required.' });
   }
 
-  if (!profilePicture) {
-    return res.status(400).json({ error: 'Profile Picture is required.' });
+  if (!req.file) {
+    return res.status(400).json({ error: 'file is not uploaded properly' });
   }
 
   next();

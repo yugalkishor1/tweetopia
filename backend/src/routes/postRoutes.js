@@ -2,7 +2,7 @@ import express from 'express'
 import {
   createPost,
   getAllPosts,
-  // getPostById,
+  getPostById,
   // updatePost,
   // deletePost,
   // likePost,
@@ -16,14 +16,11 @@ const router = express.Router();
 
 router.post('/',  createPost);
 router.get('/', getAllPosts);
-
-// // Get a post by id
-// router.get('/:postId', getPostById);
+router.get('/:postId', getPostById);
 
 // // Update a post
 // router.put('/:postId', updatePost);
 
-// // Delete a post
 // router.delete('/:postId',  deletePost);
 
 // // Like a post

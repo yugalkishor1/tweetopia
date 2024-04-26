@@ -1,23 +1,29 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
+import userModel from '../models/userModel.js';
+import userImgaeModel from '../models/userImageModel.js';
 
 export const registerUser = async (req, res, next) => {
   try {
-    const { username, email, password,fullName,bio,profilePicture} = req.body;
-    console.log(req.body);
-    console.log("REQFILE",profilePicture);
-   
+    const {path,size} = req.file;
+    const {username,email,password,fullName,bio} = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists, Try another Email' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await User.create({ username, email, password:hashedPassword, fullName, bio, profilePicture })
+    const newUser = await userModel.create({ username, email, password:hashedPassword, fullName, bio })
  
+    const newUserImageModel = await userImgaeModel.create({userId:newUser._id,imageUrlpath,imageType:'profilePicture',size:size})
+
+    newUser.profilePicture = newUserImageModel._id
+
+    await newUser.save()
+
     res.status(200).json({message:"user created succesfully",user:newUser})
    
   } catch (err) {

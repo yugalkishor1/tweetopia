@@ -5,11 +5,11 @@ import postVideosModel from '../models/postVideoModel.js';
 
 export const createPost = async (req, res) => {
   try {
-    const { userId } = req.user; 
-    const { text, images, videos, hashtags, mentions } = req.body;
-    // const { text, images, videos, hashtags, mentions,user } = req.body;
+    // const { userId } = req.user; 
+    // const { text, images, videos, hashtags, mentions } = req.body;
+    const { text, images, videos, hashtags, mentions,user } = req.body;
 
-    const newPost = await postModel.create({ user:userId,text,hashtags})
+    const newPost = await postModel.create({ user,text,hashtags})
 
     // Handle images
     if (images && images.length > 0) {
@@ -38,7 +38,7 @@ export const createPost = async (req, res) => {
     }
 
     // Update the user's post count
-    await userModel.findByIdAndUpdate(userId, { $push: { posts: newPost._id } });
+    await userModel.findByIdAndUpdate(user, { $push: { posts: newPost._id } });
 
     res.status(201).json(newPost);
   } catch (error) {
@@ -61,27 +61,25 @@ export const getAllPosts = async (req, res, next) => {
   }
 };
 
+export const getPostById = async (req, res, next) => {
+  try {
+    const post = await postModel.findById(req.params.postId)
+      .populate('user', 'username fullName profilePicture')
+      // .populate('images', 'imageUrl dimensions size')
+      // .populate('videos', 'videoUrl duration size')
+      // .populate('replies', 'text user createdAt');
 
-// // Get a post by ID
-// export const getPostById = async (req, res, next) => {
-//   try {
-//     const post = await Post.findById(req.params.postId)
-//       .populate('user', 'username fullName profilePicture')
-//       .populate('images', 'imageUrl dimensions size')
-//       .populate('videos', 'videoUrl duration size')
-//       .populate('replies', 'text user createdAt');
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
 
-//     if (!post) {
-//       return res.status(404).json({ message: 'Post not found' });
-//     }
+    res.status(200).json(post);
+  } catch (err) {
+    next(err);
+  }
+};
 
-//     res.status(200).json(post);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
-// // Update a post
+// Update a post
 // export const updatePost = async (req, res, next) => {
 //   try {
 //     const { text, hashtags, mentions } = req.body;
@@ -110,41 +108,40 @@ export const getAllPosts = async (req, res, next) => {
 //   }
 // };
 
-// // Delete a post
-// export const deletePost = async (req, res, next) => {
-//   try {
-//     const userId = req.user._id;
+export const deletePost = async (req, res, next) => {
+  try {
+    const userId = req.user._id;
 
-//     const post = await Post.findById(req.params.postId);
+    const post = await postModel.findById(req.params.postId);
 
-//     if (!post) {
-//       return res.status(404).json({ message: 'Post not found' });
-//     }
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
 
-//     if (post.user.toString() !== userId.toString()) {
-//       return res.status(403).json({ message: 'Not authorized to delete this post' });
-//     }
+    if (post.user.toString() !== userId.toString()) {
+      return res.status(403).json({ message: 'Not authorized to delete this post' });
+    }
 
-//     // Delete post images and videos
-//     if (post.images && post.images.length > 0) {
-//       await PostImage.deleteMany({ _id: { $in: post.images } });
-//     }
+    // Delete post images and videos
+    if (post.images && post.images.length > 0) {
+      await PostImage.deleteMany({ _id: { $in: post.images } });
+    }
 
-//     if (post.videos && post.videos.length > 0) {
-//       await PostVideo.deleteMany({ _id: { $in: post.videos } });
-//     }
+    if (post.videos && post.videos.length > 0) {
+      await PostVideo.deleteMany({ _id: { $in: post.videos } });
+    }
 
-//     // Delete post replies and likes
-//     await Reply.deleteMany({ post: post._id });
-//     await Like.deleteMany({ likedItem: post._id, likedItemType: 'Post' });
+    // // Delete post replies and likes
+    // await Reply.deleteMany({ post: post._id });
+    // await Like.deleteMany({ likedItem: post._id, likedItemType: 'Post' });
 
-//     await post.remove();
+    await post.remove();
 
-//     res.status(200).json({ message: 'Post deleted successfully' });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+    res.status(200).json({ message: 'Post deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
 
 // // Like a post
 // export const likePost = async (req, res, next) => {

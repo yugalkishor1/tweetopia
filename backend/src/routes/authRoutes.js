@@ -6,7 +6,14 @@ import fileUpload from '../middleware/upload.js';
 
 const router = express.Router();
 
-router.post('/register',fileUpload.single("image"),validateRegistration,registerUser);
+router.post('/register',
+function(req,res,next){
+    console.log("REQBODY",req.body);
+    console.log("REQHEADERS",req.headers);
+    console.log("REQRAWHEADERS",req.rawHeaders);
+    next()
+}
+,fileUpload.single("profilePicture"),function(req,res,next){console.log("REQFILE",req.file);console.log(req.body);next()},validateRegistration,registerUser)
 
 router.post('/login', validateLogin, loginUser);
 

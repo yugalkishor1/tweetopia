@@ -4,6 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import  bodyParser from "body-parser";
 import connectDB from './config/database.js';
+import multer from "multer"
 
 
 // Import routes
@@ -11,12 +12,14 @@ import authRoutes from './routes/authRoutes.js';
 // import postRoutes from "./routes/postRoutes.js"
 
 const app = express();
-
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+
+// bhilai smriti nagar software development
 // routes
 app.use('/api/auth', authRoutes)  
 // app.use('/api/post', postRoutes)  

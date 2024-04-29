@@ -23,9 +23,9 @@ const userImagesSchema = new mongoose.Schema({
   //   width: Number,
   //   height: Number
   // },
-  size: {
-    type: Number
-  }
+  // size: {
+  //   type: Number
+  // }
   });
 
   const userImagesModel = mongoose.model('UserImage', userImagesSchema);

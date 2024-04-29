@@ -3,11 +3,12 @@ import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import userModel from '../models/userModel.js';
 import userImgaeModel from '../models/userImageModel.js';
+import cloudinary from '../config/cloudinary.js';
 
 export const registerUser = async (req, res, next) => {
   try {
-    const {path,size} = req.file;
-    const {username,email,password,fullName,bio} = req.body;
+
+    const {username,email,password,fullName,bio} = JSON.parse(req.body.data);
 
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
@@ -17,8 +18,11 @@ export const registerUser = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await userModel.create({ username, email, password:hashedPassword, fullName, bio })
- 
-    const newUserImageModel = await userImgaeModel.create({userId:newUser._id,imageUrlpath,imageType:'profilePicture',size:size})
+
+    const result = await cloudinary.uploader.upload(req.file.path);
+    console.log("UPLOADED FILE IN CLOUDINARY", result);
+  
+    const newUserImageModel = await userImgaeModel.create({userId:newUser._id,imageUrl:result.secure_url,imageType:'profilePicture'})
 
     newUser.profilePicture = newUserImageModel._id
 
@@ -31,6 +35,37 @@ export const registerUser = async (req, res, next) => {
     next(err);
   }
 };
+
+// export const registerUser = async (req, res, next) => {
+//   try {
+
+//     const {username,email,password,fullName,bio} = req.body;
+
+//     const existingUser = await userModel.findOne({ email });
+//     if (existingUser) {
+//       return res.status(400).json({ message: 'User already exists, Try another Email' });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     const newUser = await userModel.create({ username, email, password:hashedPassword, fullName, bio })
+
+//     const result = await cloudinary.uploader.upload(req.file.path)
+//     console.log("UPLOADED FILE IN CLOUDINARY", result);
+  
+//     const newUserImageModel = await userImgaeModel.create({userId:newUser._id,imageUrlpath:result.secure_url,imageType:'profilePicture',size:size})
+
+//     newUser.profilePicture = newUserImageModel._id
+
+//     await newUser.save()
+
+//     res.status(200).json({message:"user created succesfully",user:newUser})
+   
+//   } catch (err) {
+//     console.log(err.message);
+//     next(err);
+//   }
+// };
 
 export const loginUser = async (req, res, next) => {
   try {

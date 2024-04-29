@@ -13,6 +13,3 @@ const storage = new CloudinaryStorage({cloudinary: cloudinary});
 const fileUpload = multer({ storage: storage });
 
 export default fileUpload; 
-
-
-

@@ -1,5 +1,5 @@
 export const validateRegistration = (req, res, next) => {
-  const { username, email, password, fullName, bio } = req.body;
+  const { username, email, password, fullName, bio } = JSON.parse(req.body.data);
   if (!username ) {
     return res.status(400).json({ error: 'Username is required.' });
   }
@@ -21,9 +21,9 @@ export const validateRegistration = (req, res, next) => {
     return res.status(400).json({ error: 'Bio is required.' });
   }
 
-  if (!req.file) {
-    return res.status(400).json({ error: 'file is not uploaded properly' });
-  }
+  // if (!req.file.secure_url) {
+  //   return res.status(400).json({ error: 'file is not uploaded properly' });
+  // }
 
   next();
 };

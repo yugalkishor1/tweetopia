@@ -1,9 +1,10 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/userModel.js';
+import userModel from '../models/userModel.js';
 import userModel from '../models/userModel.js';
 import userImgaeModel from '../models/userImageModel.js';
 import cloudinary from '../config/cloudinary.js';
+import dotenv from "dotenv"
 
 export const registerUser = async (req, res, next) => {
   try {
@@ -71,7 +72,7 @@ export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await userModel.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -81,7 +82,7 @@ export const loginUser = async (req, res, next) => {
       return res.status(401).json({ message: 'Enter right password' });
     }
 
-    const token = jwt.sign({ userId: user._id }, "my secret key");
+    const token = jwt.sign({ userId: user._id }, process.env.MY_SECRET);
 
     res.status(200).json({ token });
   } catch (err) {

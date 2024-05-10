@@ -21,9 +21,9 @@ export const validateRegistration = (req, res, next) => {
     return res.status(400).json({ error: 'Bio is required.' });
   }
 
-  // if (!req.file.secure_url) {
-  //   return res.status(400).json({ error: 'file is not uploaded properly' });
-  // }
+  if (!req.file) {
+    return res.status(400).json({ error: 'file is not uploaded properly' });
+  }
 
   next();
 };

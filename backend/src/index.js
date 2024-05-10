@@ -7,9 +7,12 @@ import connectDB from './config/database.js';
 import multer from "multer"
 
 
-// Import routes
 import authRoutes from './routes/authRoutes.js';
-// import postRoutes from "./routes/postRoutes.js"
+import postRoutes from "./routes/postRoutes.js"
+// import likeRoutes from "./routes/likeRoutes.js"
+// import followRoutes from "./routes/followRoutes.js"
+// import followRoutes from "./routes/followRoutes.js"
+// import followRoutes from "./routes/followRoutes.js"
 
 const app = express();
 app.use(bodyParser.json());
@@ -22,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 // bhilai smriti nagar software development
 // routes
 app.use('/api/auth', authRoutes)  
-// app.use('/api/post', postRoutes)  
+app.use('/api/post', postRoutes)  
 
 app.use((err, req, res, next) => {
   console.error(err); 
